@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="data/EdenReforestionsites_1.js"></script>
+        <script src="data/Sitecentroids_2.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        })
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+            if (bounds_group.getLayers().length) {
+                map.fitBounds(bounds_group.getBounds());
+            }
+        }
+        map.createPane('pane_ESRIGraydark_0');
+        map.getPane('pane_ESRIGraydark_0').style.zIndex = 400;
+        var layer_ESRIGraydark_0 = L.tileLayer('http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+            pane: 'pane_ESRIGraydark_0',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 20
+        });
+        layer_ESRIGraydark_0;
+        map.addLayer(layer_ESRIGraydark_0);
+        function pop_EdenReforestionsites_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Site name'] !== null ? autolinker.link(feature.properties['Site name'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Descriptio'] !== null ? autolinker.link(feature.properties['Descriptio'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Restor '] !== null ? autolinker.link(feature.properties['Restor '].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_EdenReforestionsites_1_0() {
+            return {
+                pane: 'pane_EdenReforestionsites_1',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_EdenReforestionsites_1');
+        map.getPane('pane_EdenReforestionsites_1').style.zIndex = 401;
+        map.getPane('pane_EdenReforestionsites_1').style['mix-blend-mode'] = 'normal';
+        var layer_EdenReforestionsites_1 = new L.geoJson(json_EdenReforestionsites_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_EdenReforestionsites_1',
+            layerName: 'layer_EdenReforestionsites_1',
+            pane: 'pane_EdenReforestionsites_1',
+            onEachFeature: pop_EdenReforestionsites_1,
+            style: style_EdenReforestionsites_1_0,
+        });
+        bounds_group.addLayer(layer_EdenReforestionsites_1);
+        map.addLayer(layer_EdenReforestionsites_1);
+        function pop_Sitecentroids_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Site name'] !== null ? autolinker.link(feature.properties['Site name'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Restor'] !== null ? autolinker.link(feature.properties['Restor'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Sitecentroids_2_0() {
+            return {
+                pane: 'pane_Sitecentroids_2',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/eco_green_tree_02.svg',
+            iconSize: [30.4, 30.4]
+        }),
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Sitecentroids_2');
+        map.getPane('pane_Sitecentroids_2').style.zIndex = 402;
+        map.getPane('pane_Sitecentroids_2').style['mix-blend-mode'] = 'normal';
+        var layer_Sitecentroids_2 = new L.geoJson(json_Sitecentroids_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Sitecentroids_2',
+            layerName: 'layer_Sitecentroids_2',
+            pane: 'pane_Sitecentroids_2',
+            onEachFeature: pop_Sitecentroids_2,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.marker(latlng, style_Sitecentroids_2_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Sitecentroids_2);
+        map.addLayer(layer_Sitecentroids_2);
+        setBounds();
+        </script>
+    </body>
+</html>
